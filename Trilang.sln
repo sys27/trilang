@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trilang", "Trilang\Trilang.csproj", "{FF96918A-5021-41A3-9199-99DDAC2B8746}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trilang.Cli", "Trilang.Cli\Trilang.Cli.csproj", "{AED7F9ED-6518-456A-B93F-0E1C25CCA8B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trilang.Tests", "Trilang.Tests\Trilang.Tests.csproj", "{A76BE0FC-165E-4F84-A034-6B7A94212D8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A78AE55E-8AE3-464B-A2E9-2E88E377798F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF96918A-5021-41A3-9199-99DDAC2B8746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF96918A-5021-41A3-9199-99DDAC2B8746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF96918A-5021-41A3-9199-99DDAC2B8746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF96918A-5021-41A3-9199-99DDAC2B8746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED7F9ED-6518-456A-B93F-0E1C25CCA8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED7F9ED-6518-456A-B93F-0E1C25CCA8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED7F9ED-6518-456A-B93F-0E1C25CCA8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED7F9ED-6518-456A-B93F-0E1C25CCA8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A76BE0FC-165E-4F84-A034-6B7A94212D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A76BE0FC-165E-4F84-A034-6B7A94212D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A76BE0FC-165E-4F84-A034-6B7A94212D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A76BE0FC-165E-4F84-A034-6B7A94212D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
