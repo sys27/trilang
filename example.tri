@@ -1,0 +1,59 @@
+// alias
+type Zip = i32;
+type Point2d = (x: int, y: int);
+
+// interface
+type Equitable<T> = {
+	equals(T other);
+}
+
+// du
+type Error {
+	getMessage();
+}
+type Result<TResult, TError> 
+	where TError : Error =
+	| TResult
+	| TError
+
+type Result<TResult> = Result<TResult, Error>;
+
+type Service {
+	login(login: string, password: string): Result<bool> {
+		var result: Result<User> = userService.getUser(login);
+		if (result is Error) {
+			logger.Log(result.getMessage());
+			return false;
+		}
+
+		var valResult: Result<ValidationResult> = result.Validate(password);
+		if (valResult is Error) {
+			return valResult;
+		}
+
+		return true;
+	}
+
+	login(login: string, password: string): Result<bool> {
+		var result: User = userService.getUser(login).unwrap();
+		var valResult: ValidationResult = result.Validate(password).unwrap();
+		// ...
+
+		return true;
+	}
+}
+
+function sum(arr: i32[]): i32 {
+	return arr switch {
+		[x, ..tail] => x + sum(tail),
+		[]          => 0,
+	};
+}
+
+function main(): i32 {
+	var result = sum([1, 2, 3, 4, 5]);
+	var result = [1, 2, 3, 4, 5] |> sum;
+	printf("Sum: %d", result);
+
+	return 0;
+}
