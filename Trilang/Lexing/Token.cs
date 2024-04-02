@@ -11,6 +11,9 @@ public class Token : IEquatable<Token>
     public static Token Number(int value)
         => new Token(TokenKind.Number, value);
 
+    public static Token Id(string id)
+        => new Token(TokenKind.Identifier, id);
+
     public static Token EndOfFile()
         => new Token(TokenKind.EndOfFile, null);
 
@@ -49,10 +52,16 @@ public class Token : IEquatable<Token>
     public override int GetHashCode()
         => HashCode.Combine((int)Kind, Value);
 
+    public bool Is(TokenKind kind)
+        => Kind == kind;
+
     public TokenKind Kind { get; }
 
     public object? Value { get; }
 
     public int AsNumber()
         => (int)Value!;
+
+    public string AsString()
+        => (string)Value!;
 }

@@ -1,19 +1,19 @@
 namespace Trilang.Parsing.Ast;
 
-public class ReturnStatementNode : IStatementNode, IEquatable<ReturnStatementNode>
+public class SyntaxTree : IEquatable<SyntaxTree>
 {
-    public ReturnStatementNode(IExpressionNode value)
+    public SyntaxTree(List<FunctionDefinitionNode> functions)
     {
-        Value = value;
+        Functions = functions;
     }
 
-    public static bool operator ==(ReturnStatementNode? left, ReturnStatementNode? right)
+    public static bool operator ==(SyntaxTree? left, SyntaxTree? right)
         => Equals(left, right);
 
-    public static bool operator !=(ReturnStatementNode? left, ReturnStatementNode? right)
+    public static bool operator !=(SyntaxTree? left, SyntaxTree? right)
         => !Equals(left, right);
 
-    public bool Equals(ReturnStatementNode? other)
+    public bool Equals(SyntaxTree? other)
     {
         if (ReferenceEquals(null, other))
             return false;
@@ -21,7 +21,7 @@ public class ReturnStatementNode : IStatementNode, IEquatable<ReturnStatementNod
         if (ReferenceEquals(this, other))
             return true;
 
-        return Value.Equals(other.Value);
+        return Functions.SequenceEqual(other.Functions);
     }
 
     public override bool Equals(object? obj)
@@ -35,11 +35,11 @@ public class ReturnStatementNode : IStatementNode, IEquatable<ReturnStatementNod
         if (obj.GetType() != GetType())
             return false;
 
-        return Equals((ReturnStatementNode)obj);
+        return Equals((SyntaxTree)obj);
     }
 
     public override int GetHashCode()
-        => Value.GetHashCode();
+        => Functions.GetHashCode();
 
-    public IExpressionNode Value { get; }
+    public List<FunctionDefinitionNode> Functions { get; }
 }

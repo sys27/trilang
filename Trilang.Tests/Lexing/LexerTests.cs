@@ -8,7 +8,7 @@ public class LexerTests
     public void GetTokenForEmptyStringTest()
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens(string.Empty);
+        var tokens = lexer.Tokenize(string.Empty);
 
         Assert.That(tokens, Has.Count.EqualTo(1));
         Assert.That(tokens[0], Is.EqualTo(Token.EndOfFile()));
@@ -18,7 +18,7 @@ public class LexerTests
     public void SkipWhitespaceTokensTest()
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens(" \t\n\r");
+        var tokens = lexer.Tokenize(" \t\n\r");
 
         Assert.That(tokens, Has.Count.EqualTo(1));
         Assert.That(tokens[0], Is.EqualTo(Token.EndOfFile()));
@@ -28,7 +28,7 @@ public class LexerTests
     public void GetTokenForNumberTest()
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens("123");
+        var tokens = lexer.Tokenize("123");
         var expected = new[]
         {
             Token.Number(123),
@@ -48,7 +48,7 @@ public class LexerTests
     public void GetTokenForKeywordTest(string code, TokenKind expectedTokenKind)
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens(code);
+        var tokens = lexer.Tokenize(code);
         var expected = new[]
         {
             new Token(expectedTokenKind, null),
@@ -64,7 +64,7 @@ public class LexerTests
     public void GetTokensForIdentifierTest(string id)
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens(id);
+        var tokens = lexer.Tokenize(id);
         var expected = new[]
         {
             new Token(TokenKind.Identifier, id),
@@ -103,7 +103,7 @@ public class LexerTests
     public void GetTokensForOperatorTest(string code, TokenKind expectedTokenKind)
     {
         var lexer = new Lexer();
-        var tokens = lexer.GetTokens(code);
+        var tokens = lexer.Tokenize(code);
         var expected = new[]
         {
             new Token(expectedTokenKind, null),

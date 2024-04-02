@@ -21,7 +21,7 @@ public class BlockStatementNode : IStatementNode, IEquatable<BlockStatementNode>
         if (ReferenceEquals(this, other))
             return true;
 
-        return Statements.Equals(other.Statements);
+        return Statements.SequenceEqual(other.Statements);
     }
 
     public override bool Equals(object? obj)

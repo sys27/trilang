@@ -5,8 +5,8 @@ public class FunctionDefinitionNode : ISyntaxNode, IEquatable<FunctionDefinition
     public FunctionDefinitionNode(
         IdentifierNode name,
         List<FunctionParameterNode> parameters,
-        BlockStatementNode body,
-        IdentifierNode returnType)
+        IdentifierNode returnType,
+        BlockStatementNode body)
     {
         Name = name;
         Parameters = parameters;
@@ -29,7 +29,7 @@ public class FunctionDefinitionNode : ISyntaxNode, IEquatable<FunctionDefinition
             return true;
 
         return Name.Equals(other.Name) &&
-               Parameters.Equals(other.Parameters) &&
+               Parameters.SequenceEqual(other.Parameters) &&
                Body.Equals(other.Body) &&
                ReturnType.Equals(other.ReturnType);
     }

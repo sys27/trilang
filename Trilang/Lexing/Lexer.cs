@@ -2,7 +2,7 @@ namespace Trilang.Lexing;
 
 public class Lexer
 {
-    public List<Token> GetTokens(string code)
+    public List<Token> Tokenize(string code)
     {
         var tokens = new List<Token>();
 
@@ -47,7 +47,7 @@ public class Lexer
                     "for" => new Token(TokenKind.For, null),
                     "return" => new Token(TokenKind.Return, null),
 
-                    _ => new Token(TokenKind.Identifier, id.ToString())
+                    _ => Token.Id(id.ToString()),
                 });
 
                 continue;
