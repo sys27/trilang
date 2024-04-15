@@ -148,14 +148,54 @@ public class Parser
     }
 
     private IExpressionNode? TryParseExpression()
+        => TryParseBinaryExpression();
+
+    private IExpressionNode? TryParseBinaryExpression()
     {
-        return TryParseLiteral();
+        var left = TryParseOperand();
+        if (left is null)
+            return null;
+
+        while (true)
+        {
+            BinaryOperatorKind kind;
+            if (reader.Check(TokenKind.Plus))
+                kind = BinaryOperatorKind.Add;
+            else if (reader.Check(TokenKind.Minus))
+                kind = BinaryOperatorKind.Subtract;
+            else if (reader.Check(TokenKind.Asterisk))
+                kind = BinaryOperatorKind.Multiply;
+            else if (reader.Check(TokenKind.Slash))
+                kind = BinaryOperatorKind.Divide;
+            else
+                break;
+
+            var right = TryParseOperand();
+            if (right is null)
+                throw new Exception("Expected right operand.");
+
+            left = new BinaryExpressionNode(left, right, kind);
+        }
+
+        return left;
     }
+
+    private IExpressionNode? TryParseOperand()
+        => TryParseLiteral() ??
+           TryParseIdentifierExpression();
 
     private IExpressionNode? TryParseLiteral()
     {
         if (reader.Check(TokenKind.Number, out var token))
             return new LiteralExpressionNode(token.AsNumber());
+
+        return null;
+    }
+
+    private IExpressionNode? TryParseIdentifierExpression()
+    {
+        if (reader.Check(TokenKind.Identifier, out var token))
+            return new IdentifierExpressionNode(token.AsString());
 
         return null;
     }
