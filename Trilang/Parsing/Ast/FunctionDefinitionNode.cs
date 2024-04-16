@@ -51,6 +51,9 @@ public class FunctionDefinitionNode : ISyntaxNode, IEquatable<FunctionDefinition
     public override int GetHashCode()
         => HashCode.Combine(Name, Parameters, Body, ReturnType);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public IdentifierNode Name { get; }
 
     public List<FunctionParameterNode> Parameters { get; }

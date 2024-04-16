@@ -42,6 +42,9 @@ public class FunctionParameterNode : ISyntaxNode, IEquatable<FunctionParameterNo
     public override int GetHashCode()
         => HashCode.Combine(Name, Type);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public IdentifierNode Name { get; }
 
     public IdentifierNode Type { get; }

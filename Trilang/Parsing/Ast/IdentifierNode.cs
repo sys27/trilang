@@ -41,5 +41,8 @@ public class IdentifierNode : ISyntaxNode, IEquatable<IdentifierNode>
     public override int GetHashCode()
         => Name.GetHashCode();
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public string Name { get; }
 }

@@ -45,6 +45,9 @@ public class VariableDeclarationNode : IStatementNode, IEquatable<VariableDeclar
     public override int GetHashCode()
         => HashCode.Combine(Name, Type, Value);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public IdentifierNode Name { get; }
 
     public IdentifierNode Type { get; }

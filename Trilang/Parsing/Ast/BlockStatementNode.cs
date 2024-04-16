@@ -41,5 +41,8 @@ public class BlockStatementNode : IStatementNode, IEquatable<BlockStatementNode>
     public override int GetHashCode()
         => Statements.GetHashCode();
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public List<IStatementNode> Statements { get; }
 }

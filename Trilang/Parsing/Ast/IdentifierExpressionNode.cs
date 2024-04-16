@@ -41,5 +41,8 @@ public class IdentifierExpressionNode : IExpressionNode, IEquatable<IdentifierEx
     public override int GetHashCode()
         => HashCode.Combine(Value);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public string Value { get; }
 }

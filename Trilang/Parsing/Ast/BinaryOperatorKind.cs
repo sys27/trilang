@@ -7,3 +7,15 @@ public enum BinaryOperatorKind
     Multiply,
     Divide,
 }
+
+public static class BinaryOperatorKindExtensions
+{
+    public static int GetPriority(this BinaryOperatorKind kind)
+        => kind switch
+        {
+            BinaryOperatorKind.Add or BinaryOperatorKind.Subtract => 1,
+            BinaryOperatorKind.Multiply or BinaryOperatorKind.Divide => 2,
+
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
+        };
+}

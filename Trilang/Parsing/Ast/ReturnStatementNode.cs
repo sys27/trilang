@@ -41,5 +41,8 @@ public class ReturnStatementNode : IStatementNode, IEquatable<ReturnStatementNod
     public override int GetHashCode()
         => Value.GetHashCode();
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public IExpressionNode Value { get; }
 }

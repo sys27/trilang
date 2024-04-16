@@ -41,5 +41,8 @@ public class LiteralExpressionNode : IExpressionNode, IEquatable<LiteralExpressi
     public override int GetHashCode()
         => HashCode.Combine(Value);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public object Value { get; }
 }

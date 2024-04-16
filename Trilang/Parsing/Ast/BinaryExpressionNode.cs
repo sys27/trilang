@@ -45,6 +45,9 @@ public class BinaryExpressionNode : IExpressionNode, IEquatable<BinaryExpression
     public override int GetHashCode()
         => HashCode.Combine(Left, Right, (int)Operator);
 
+    public void Accept(IVisitor visitor)
+        => visitor.Visit(this);
+
     public IExpressionNode Left { get; }
 
     public IExpressionNode Right { get; }
