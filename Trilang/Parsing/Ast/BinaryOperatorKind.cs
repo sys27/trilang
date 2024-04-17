@@ -10,7 +10,7 @@ public enum BinaryOperatorKind
 
 public static class BinaryOperatorKindExtensions
 {
-    public static int GetPriority(this BinaryOperatorKind kind)
+    public static int GetPrecedence(this BinaryOperatorKind kind)
         => kind switch
         {
             BinaryOperatorKind.Add or BinaryOperatorKind.Subtract => 1,

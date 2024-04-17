@@ -150,7 +150,7 @@ public class Parser
     private IExpressionNode? TryParseExpression()
         => TryParseBinaryExpression();
 
-    private IExpressionNode? TryParseBinaryExpression()
+    private IExpressionNode? TryParseBinaryExpression(int parentPrecedence = 0)
     {
         var left = TryParseOperand();
         if (left is null)
@@ -159,18 +159,23 @@ public class Parser
         while (true)
         {
             BinaryOperatorKind kind;
-            if (reader.Check(TokenKind.Plus))
+            if (reader.Current.Is(TokenKind.Plus))
                 kind = BinaryOperatorKind.Add;
-            else if (reader.Check(TokenKind.Minus))
+            else if (reader.Current.Is(TokenKind.Minus))
                 kind = BinaryOperatorKind.Subtract;
-            else if (reader.Check(TokenKind.Asterisk))
+            else if (reader.Current.Is(TokenKind.Asterisk))
                 kind = BinaryOperatorKind.Multiply;
-            else if (reader.Check(TokenKind.Slash))
+            else if (reader.Current.Is(TokenKind.Slash))
                 kind = BinaryOperatorKind.Divide;
             else
                 break;
 
-            var right = TryParseOperand();
+            var precedence = kind.GetPrecedence();
+            if (precedence <= parentPrecedence)
+                break;
+
+            reader.Advance();
+            var right = TryParseBinaryExpression(precedence);
             if (right is null)
                 throw new Exception("Expected right operand.");
 
@@ -219,7 +224,7 @@ public class Parser
             index = 0;
         }
 
-        private void Advance()
+        public void Advance()
         {
             if (!HasEnded)
                 index++;

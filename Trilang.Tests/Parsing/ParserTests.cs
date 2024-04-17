@@ -252,4 +252,47 @@ public class ParserTests
 
         Assert.That(tree, Is.EqualTo(expected));
     }
+
+    [Test]
+    public void SamePriorityTestExpressionTest()
+    {
+        const string code =
+            """
+            function main(): int {
+                return a + b - c - d + e;
+            }
+            """;
+        var parse = new Parser(code);
+        var tree = parse.Parse();
+        var expected = new SyntaxTree([
+            new FunctionDefinitionNode(
+                new IdentifierNode("main"),
+                [],
+                new IdentifierNode("int"),
+                new BlockStatementNode([
+                    new ReturnStatementNode(
+                        new BinaryExpressionNode(
+                            new BinaryExpressionNode(
+                                new BinaryExpressionNode(
+                                    new BinaryExpressionNode(
+                                        new IdentifierExpressionNode("a"),
+                                        new IdentifierExpressionNode("b"),
+                                        BinaryOperatorKind.Add
+                                    ),
+                                    new IdentifierExpressionNode("c"),
+                                    BinaryOperatorKind.Subtract
+                                ),
+                                new IdentifierExpressionNode("d"),
+                                BinaryOperatorKind.Subtract
+                            ),
+                            new IdentifierExpressionNode("e"),
+                            BinaryOperatorKind.Add
+                        )
+                    )
+                ])
+            )
+        ]);
+
+        Assert.That(tree, Is.EqualTo(expected));
+    }
 }
