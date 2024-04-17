@@ -81,11 +81,11 @@ public class ParserTests
                     new ReturnStatementNode(
                         new BinaryExpressionNode(
                             new BinaryExpressionNode(
-                                new IdentifierExpressionNode("a"),
-                                new IdentifierExpressionNode("b"),
+                                new IdentifierExpressionNode(new IdentifierNode("a")),
+                                new IdentifierExpressionNode(new IdentifierNode("b")),
                                 BinaryOperatorKind.Add
                             ),
-                            new IdentifierExpressionNode("c"),
+                            new IdentifierExpressionNode(new IdentifierNode("c")),
                             BinaryOperatorKind.Add
                         )
                     )
@@ -119,11 +119,11 @@ public class ParserTests
                     new ReturnStatementNode(
                         new BinaryExpressionNode(
                             new BinaryExpressionNode(
-                                new IdentifierExpressionNode("a"),
-                                new IdentifierExpressionNode("b"),
+                                new IdentifierExpressionNode(new IdentifierNode("a")),
+                                new IdentifierExpressionNode(new IdentifierNode("b")),
                                 BinaryOperatorKind.Subtract
                             ),
-                            new IdentifierExpressionNode("c"),
+                            new IdentifierExpressionNode(new IdentifierNode("c")),
                             BinaryOperatorKind.Subtract
                         )
                     )
@@ -157,11 +157,11 @@ public class ParserTests
                     new ReturnStatementNode(
                         new BinaryExpressionNode(
                             new BinaryExpressionNode(
-                                new IdentifierExpressionNode("a"),
-                                new IdentifierExpressionNode("b"),
+                                new IdentifierExpressionNode(new IdentifierNode("a")),
+                                new IdentifierExpressionNode(new IdentifierNode("b")),
                                 BinaryOperatorKind.Multiply
                             ),
-                            new IdentifierExpressionNode("c"),
+                            new IdentifierExpressionNode(new IdentifierNode("c")),
                             BinaryOperatorKind.Multiply
                         )
                     )
@@ -195,11 +195,11 @@ public class ParserTests
                     new ReturnStatementNode(
                         new BinaryExpressionNode(
                             new BinaryExpressionNode(
-                                new IdentifierExpressionNode("a"),
-                                new IdentifierExpressionNode("b"),
+                                new IdentifierExpressionNode(new IdentifierNode("a")),
+                                new IdentifierExpressionNode(new IdentifierNode("b")),
                                 BinaryOperatorKind.Divide
                             ),
-                            new IdentifierExpressionNode("c"),
+                            new IdentifierExpressionNode(new IdentifierNode("c")),
                             BinaryOperatorKind.Divide
                         )
                     )
@@ -230,17 +230,17 @@ public class ParserTests
                     new ReturnStatementNode(
                         new BinaryExpressionNode(
                             new BinaryExpressionNode(
-                                new IdentifierExpressionNode("a"),
-                                new IdentifierExpressionNode("b"),
+                                new IdentifierExpressionNode(new IdentifierNode("a")),
+                                new IdentifierExpressionNode(new IdentifierNode("b")),
                                 BinaryOperatorKind.Subtract
                             ),
                             new BinaryExpressionNode(
                                 new BinaryExpressionNode(
-                                    new IdentifierExpressionNode("c"),
-                                    new IdentifierExpressionNode("d"),
+                                    new IdentifierExpressionNode(new IdentifierNode("c")),
+                                    new IdentifierExpressionNode(new IdentifierNode("d")),
                                     BinaryOperatorKind.Divide
                                 ),
-                                new IdentifierExpressionNode("e"),
+                                new IdentifierExpressionNode(new IdentifierNode("e")),
                                 BinaryOperatorKind.Multiply
                             ),
                             BinaryOperatorKind.Add
@@ -275,19 +275,48 @@ public class ParserTests
                             new BinaryExpressionNode(
                                 new BinaryExpressionNode(
                                     new BinaryExpressionNode(
-                                        new IdentifierExpressionNode("a"),
-                                        new IdentifierExpressionNode("b"),
+                                        new IdentifierExpressionNode(new IdentifierNode("a")),
+                                        new IdentifierExpressionNode(new IdentifierNode("b")),
                                         BinaryOperatorKind.Add
                                     ),
-                                    new IdentifierExpressionNode("c"),
+                                    new IdentifierExpressionNode(new IdentifierNode("c")),
                                     BinaryOperatorKind.Subtract
                                 ),
-                                new IdentifierExpressionNode("d"),
+                                new IdentifierExpressionNode(new IdentifierNode("d")),
                                 BinaryOperatorKind.Subtract
                             ),
-                            new IdentifierExpressionNode("e"),
+                            new IdentifierExpressionNode(new IdentifierNode("e")),
                             BinaryOperatorKind.Add
                         )
+                    )
+                ])
+            )
+        ]);
+
+        Assert.That(tree, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void VariableDeclarationTest()
+    {
+        const string code =
+            """
+            function main(): int {
+                var a: int = 0;
+            }
+            """;
+        var parse = new Parser(code);
+        var tree = parse.Parse();
+        var expected = new SyntaxTree([
+            new FunctionDefinitionNode(
+                new IdentifierNode("main"),
+                [],
+                new IdentifierNode("int"),
+                new BlockStatementNode([
+                    new VariableDeclarationNode(
+                        new IdentifierNode("a"),
+                        new IdentifierNode("int"),
+                        new LiteralExpressionNode(0)
                     )
                 ])
             )

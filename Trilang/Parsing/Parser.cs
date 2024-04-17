@@ -125,14 +125,44 @@ public class Parser
 
     private IStatementNode ParseStatement()
     {
-        var statement = TryParseReturnStatement();
+        var statement = TryParseVariableDeclaration() ??
+                        TryParseReturnStatement();
         if (statement is null)
             throw new Exception();
 
         return statement;
     }
 
-    private ReturnStatementNode? TryParseReturnStatement()
+    private IStatementNode? TryParseVariableDeclaration()
+    {
+        if (!reader.Check(TokenKind.Var))
+            return null;
+
+        var name = TryParseIdentifier();
+        if (name is null)
+            throw new Exception("Expected a variable name.");
+
+        if (!reader.Check(TokenKind.Colon))
+            throw new Exception("Expected a colon.");
+
+        var type = TryParseIdentifier();
+        if (type is null)
+            throw new Exception("Expected a type.");
+
+        if (!reader.Check(TokenKind.Equals))
+            throw new Exception("Expected an equal sign.");
+
+        var expression = TryParseExpression();
+        if (expression is null)
+            throw new Exception("Expected an expression.");
+
+        if (!reader.Check(TokenKind.Semicolon))
+            throw new Exception("Expected a semicolon.");
+
+        return new VariableDeclarationNode(name, type, expression);
+    }
+
+    private IStatementNode? TryParseReturnStatement()
     {
         if (!reader.Check(TokenKind.Return))
             return null;
@@ -199,10 +229,11 @@ public class Parser
 
     private IExpressionNode? TryParseIdentifierExpression()
     {
-        if (reader.Check(TokenKind.Identifier, out var token))
-            return new IdentifierExpressionNode(token.AsString());
+        var id = TryParseIdentifier();
+        if (id is null)
+            return null;
 
-        return null;
+        return new IdentifierExpressionNode(id);
     }
 
     private IdentifierNode? TryParseIdentifier()

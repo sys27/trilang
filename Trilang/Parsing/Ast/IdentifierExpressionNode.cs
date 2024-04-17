@@ -2,9 +2,9 @@ namespace Trilang.Parsing.Ast;
 
 public class IdentifierExpressionNode : IExpressionNode, IEquatable<IdentifierExpressionNode>
 {
-    public IdentifierExpressionNode(string value)
+    public IdentifierExpressionNode(IdentifierNode identifier)
     {
-        Value = value;
+        Identifier = identifier;
     }
 
     public static bool operator ==(IdentifierExpressionNode? left, IdentifierExpressionNode? right)
@@ -21,7 +21,7 @@ public class IdentifierExpressionNode : IExpressionNode, IEquatable<IdentifierEx
         if (ReferenceEquals(this, other))
             return true;
 
-        return Value == other.Value;
+        return Identifier == other.Identifier;
     }
 
     public override bool Equals(object? obj)
@@ -39,10 +39,10 @@ public class IdentifierExpressionNode : IExpressionNode, IEquatable<IdentifierEx
     }
 
     public override int GetHashCode()
-        => HashCode.Combine(Value);
+        => HashCode.Combine(Identifier);
 
     public void Accept(IVisitor visitor)
         => visitor.Visit(this);
 
-    public string Value { get; }
+    public IdentifierNode Identifier { get; }
 }
